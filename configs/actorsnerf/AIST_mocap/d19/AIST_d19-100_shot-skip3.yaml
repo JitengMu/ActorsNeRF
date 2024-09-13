@@ -1,0 +1,68 @@
+task: 'AIST_mocap'
+subject: 'd19'
+experiment: 'AIST_d19-100_shot-skip3'
+
+
+##############################################3
+## Data Configuration
+
+train:
+  dataset_module: 'core.data.actorsnerf.finetune_300frame'
+  dataset: ['AIST_d19_train_300frame']
+  lossweights:
+    lpips: 1.0
+    mse: 0.2
+#    alpha: 0.0
+#    alpha_reg: 0.0
+#    flow: 0.0
+#    alpha_delta: 0.0
+#    xyz_cycle: 0.0
+#    eikonal: 0.0
+
+progress:
+  dataset_module: 'core.data.actorsnerf.finetune_300frame'
+  dataset: ['AIST_d19_train_300frame']
+
+eval_novel_view:
+  dataset_module: 'core.data.actorsnerf.eval'
+  dataset: ['AIST_d19_test_300frame']
+
+bgcolor: [255., 255., 255.]
+resize_img_scale: 0.5
+
+# reduce the size of patch from 32x32 to 20x20 to fit in a single gpu
+patch:
+  N_patches: 2
+  size: 32      # [Patch] size of patch
+
+use_non_rigid_motions: True
+#use_flow_reg: False
+use_pose_correction: False
+#use_transformation: False
+use_cnl_normalize_coords: True
+#use_alpha_delta: False
+use_enc: True
+train_encoder: True
+use_bw_cycle_consistency: False
+use_data_cross_pose: True
+use_data_cross_view: False
+use_wandb: False
+use_vis_mesh: False
+use_render_mask: False
+#render_mask_prob: 1.0
+#use_eikonal: False
+use_smpl_early_fusion: True
+use_smpl_feat: True
+use_pixel_feat: True
+
+
+load_cate_net: "experiments/actorsnerf/AIST_mocap/train_25/AIST_category_level-pretrain/iter_200000.tar"
+exclude_list: [
+               'encoder',
+               'mweight_vol_decoder',
+#               'nonrigid'
+#               'sparse_conv_net',
+#               'pixel_fc', 'smpl_fc',
+#               'alpha_fc',
+#               'rgb_fc',
+              ] 
